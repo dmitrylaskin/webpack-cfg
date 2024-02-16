@@ -7,7 +7,6 @@
     "jsx": "react-jsx", // позволяет убрать явный импорт React в компоненты
     "allowJs": true,
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
     // esModuleInterop позволяет работать с пакетами, которые используют
     // common js как с обычными пакета с помощью import (require() module.export) = common js
     // import Moment from 'moment';
@@ -22,6 +21,13 @@
     // import * as React from 'react';
     // можно писать такой
     // import React from 'react';
+    "allowSyntheticDefaultImports": true,
+    // путь до базовой дериктории
+    "baseUrl": ".",
+    // алиасы для замены пути 'C:/.../src' на '@'
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "ts-node": {
     "compilerOptions": {
