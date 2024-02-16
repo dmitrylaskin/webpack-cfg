@@ -66,7 +66,7 @@ export default (env: IMode) => {
                 ],
             }),
         ],
-        devtool: isDev && 'inline-source-map',
+        devtool: isDev ? 'eval-cheap-module-source-map' : 'source-map',
         module: {
             // обработка TS файлов
             // TS loader умеет работать с jsx
@@ -97,20 +97,18 @@ export default (env: IMode) => {
                     ],
                 },
                 {
-                    exclude: /node_modules/,
                     test: /\.tsx?$/,
-                    use: [
-                        {
-                            loader: 'ts-loader',
-                            options: {
-                                // hot module replace
-                                getCustomTransformers: () => ({
-                                    before: [isDev && ReactRefreshTypeScript()].filter(Boolean),
-                                }),
-                                transpileOnly: true // лоадер будет осуществлять только компиляцию TS, проверки типов будут отключены
-                            }
+                    exclude: /node_modules/,
+                    use: {
+                        loader: "babel-loader",
+                        options: {
+                            presets: [
+                                '@babel/preset-env',
+                                '@babel/preset-typescript',
+                                ['@babel/preset-react', {runtime: isDev ? 'automatic': 'classic'}]
+                            ]
                         }
-                    ]
+                    }
                 },
                 // обработка svg
                 {
